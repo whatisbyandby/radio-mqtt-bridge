@@ -1,0 +1,11 @@
+
+syntax = "proto3";
+
+message WeatherReadingMessage {
+  float temperature = 1;
+  float humidity = 2;
+  float barometric_pressure = 3;
+  float wind_speed = 4;
+  float rainfall = 5;
+  uint32 wind_direction = 6;
+}
