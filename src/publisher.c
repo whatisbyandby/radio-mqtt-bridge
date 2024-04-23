@@ -147,7 +147,7 @@ bool connect_mqtt_blocking()
     return true;
 }
 
-publish_status_t publish_message_blocking(WeatherReadingMessage *message)
+publish_status_t publish_message_blocking(WeatherReadingMessage *message, uint8_t rssi)
 {
     if (!connect_wifi())
     {
@@ -166,6 +166,9 @@ publish_status_t publish_message_blocking(WeatherReadingMessage *message)
     cJSON_AddNumberToObject(root, "current_rainfall", message->rainfall);
     cJSON_AddNumberToObject(root, "current_wind_speed", message->wind_speed);
     cJSON_AddNumberToObject(root, "current_wind_direction", message->wind_direction);
+    cJSON_AddNumberToObject(root, "current_wind_gust", message->wind_gust);
+    cJSON_AddNumberToObject(root, "battery_level", message->battery_level_mv);
+    cJSON_AddNumberToObject(root, "rssi", rssi);
 
     char *json_str = cJSON_Print(root);
     printf("%s", json_str);

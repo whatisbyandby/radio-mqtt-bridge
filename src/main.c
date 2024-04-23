@@ -27,8 +27,6 @@
 #include "config.h"
 
 
-
-
 // reset board using watchdog timer
 void reset_board()
 {
@@ -97,16 +95,16 @@ int main()
     while (true)
     {
 
-        printf("Waiting for message...\n");
+        printf("Waiting for message...");
         while (!rfm69_is_message_available(&rfm69)) {
             sleep_ms(1000);
+            printf(".");
         }
+        printf("\n");
        
 
         message_t new_message;
         rfm69_receive(&rfm69, &new_message);
-
-        printf("Message received with rssi: %d\n", new_message.rssi);
 
         WeatherReadingMessage weather_reading_message = WeatherReadingMessage_init_zero;
          bool status;
@@ -123,7 +121,7 @@ int main()
         {
             printf("Decoding failed: %s\n", PB_GET_ERROR(&stream));
         }
-        publish_status_t publish_status = publish_message_blocking(&weather_reading_message);
+        publish_status_t publish_status = publish_message_blocking(&weather_reading_message, new_message.rssi);
 
 
         if (publish_status == PUBLISH_SUCCESS)

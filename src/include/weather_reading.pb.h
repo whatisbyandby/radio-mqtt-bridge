@@ -9,14 +9,46 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
+/* Enum definitions */
+typedef enum _TemperatureUnitsProto {
+    TemperatureUnitsProto_CELSIUS = 0,
+    TemperatureUnitsProto_FAHRENHEIT = 1,
+    TemperatureUnitsProto_KELVIN = 2
+} TemperatureUnitsProto;
+
+typedef enum _PressureUnitsProto {
+    PressureUnitsProto_HECTOPASCALS = 0,
+    PressureUnitsProto_INCHES_OF_MERCURY = 1,
+    PressureUnitsProto_MILLIBARS = 2,
+    PressureUnitsProto_PASCALS = 3
+} PressureUnitsProto;
+
+typedef enum _RainfallUnitsProto {
+    RainfallUnitsProto_MILLIMETERS = 0,
+    RainfallUnitsProto_INCHES = 1
+} RainfallUnitsProto;
+
+typedef enum _WindspeedUnitsProto {
+    WindspeedUnitsProto_MPS = 0,
+    WindspeedUnitsProto_KPH = 1,
+    WindspeedUnitsProto_MPH = 2
+} WindspeedUnitsProto;
+
 /* Struct definitions */
 typedef struct _WeatherReadingMessage {
     float temperature;
+    TemperatureUnitsProto temperature_units;
     float humidity;
     float barometric_pressure;
+    PressureUnitsProto pressure_units;
     float wind_speed;
-    float rainfall;
     uint32_t wind_direction;
+    float wind_gust;
+    WindspeedUnitsProto wind_speed_units;
+    float rainfall;
+    RainfallUnitsProto rainfall_units;
+    uint32_t battery_level_mv;
+    uint32_t battery_level_percent;
 } WeatherReadingMessage;
 
 
@@ -24,26 +56,63 @@ typedef struct _WeatherReadingMessage {
 extern "C" {
 #endif
 
+/* Helper constants for enums */
+#define _TemperatureUnitsProto_MIN TemperatureUnitsProto_CELSIUS
+#define _TemperatureUnitsProto_MAX TemperatureUnitsProto_KELVIN
+#define _TemperatureUnitsProto_ARRAYSIZE ((TemperatureUnitsProto)(TemperatureUnitsProto_KELVIN+1))
+
+#define _PressureUnitsProto_MIN PressureUnitsProto_HECTOPASCALS
+#define _PressureUnitsProto_MAX PressureUnitsProto_PASCALS
+#define _PressureUnitsProto_ARRAYSIZE ((PressureUnitsProto)(PressureUnitsProto_PASCALS+1))
+
+#define _RainfallUnitsProto_MIN RainfallUnitsProto_MILLIMETERS
+#define _RainfallUnitsProto_MAX RainfallUnitsProto_INCHES
+#define _RainfallUnitsProto_ARRAYSIZE ((RainfallUnitsProto)(RainfallUnitsProto_INCHES+1))
+
+#define _WindspeedUnitsProto_MIN WindspeedUnitsProto_MPS
+#define _WindspeedUnitsProto_MAX WindspeedUnitsProto_MPH
+#define _WindspeedUnitsProto_ARRAYSIZE ((WindspeedUnitsProto)(WindspeedUnitsProto_MPH+1))
+
+#define WeatherReadingMessage_temperature_units_ENUMTYPE TemperatureUnitsProto
+#define WeatherReadingMessage_pressure_units_ENUMTYPE PressureUnitsProto
+#define WeatherReadingMessage_wind_speed_units_ENUMTYPE WindspeedUnitsProto
+#define WeatherReadingMessage_rainfall_units_ENUMTYPE RainfallUnitsProto
+
+
 /* Initializer values for message structs */
-#define WeatherReadingMessage_init_default       {0, 0, 0, 0, 0, 0}
-#define WeatherReadingMessage_init_zero          {0, 0, 0, 0, 0, 0}
+#define WeatherReadingMessage_init_default       {0, _TemperatureUnitsProto_MIN, 0, 0, _PressureUnitsProto_MIN, 0, 0, 0, _WindspeedUnitsProto_MIN, 0, _RainfallUnitsProto_MIN, 0, 0}
+#define WeatherReadingMessage_init_zero          {0, _TemperatureUnitsProto_MIN, 0, 0, _PressureUnitsProto_MIN, 0, 0, 0, _WindspeedUnitsProto_MIN, 0, _RainfallUnitsProto_MIN, 0, 0}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define WeatherReadingMessage_temperature_tag    1
-#define WeatherReadingMessage_humidity_tag       2
-#define WeatherReadingMessage_barometric_pressure_tag 3
-#define WeatherReadingMessage_wind_speed_tag     4
-#define WeatherReadingMessage_rainfall_tag       5
-#define WeatherReadingMessage_wind_direction_tag 6
+#define WeatherReadingMessage_temperature_units_tag 2
+#define WeatherReadingMessage_humidity_tag       3
+#define WeatherReadingMessage_barometric_pressure_tag 4
+#define WeatherReadingMessage_pressure_units_tag 5
+#define WeatherReadingMessage_wind_speed_tag     6
+#define WeatherReadingMessage_wind_direction_tag 7
+#define WeatherReadingMessage_wind_gust_tag      8
+#define WeatherReadingMessage_wind_speed_units_tag 9
+#define WeatherReadingMessage_rainfall_tag       10
+#define WeatherReadingMessage_rainfall_units_tag 11
+#define WeatherReadingMessage_battery_level_mv_tag 12
+#define WeatherReadingMessage_battery_level_percent_tag 13
 
 /* Struct field encoding specification for nanopb */
 #define WeatherReadingMessage_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, FLOAT,    temperature,       1) \
-X(a, STATIC,   SINGULAR, FLOAT,    humidity,          2) \
-X(a, STATIC,   SINGULAR, FLOAT,    barometric_pressure,   3) \
-X(a, STATIC,   SINGULAR, FLOAT,    wind_speed,        4) \
-X(a, STATIC,   SINGULAR, FLOAT,    rainfall,          5) \
-X(a, STATIC,   SINGULAR, UINT32,   wind_direction,    6)
+X(a, STATIC,   SINGULAR, UENUM,    temperature_units,   2) \
+X(a, STATIC,   SINGULAR, FLOAT,    humidity,          3) \
+X(a, STATIC,   SINGULAR, FLOAT,    barometric_pressure,   4) \
+X(a, STATIC,   SINGULAR, UENUM,    pressure_units,    5) \
+X(a, STATIC,   SINGULAR, FLOAT,    wind_speed,        6) \
+X(a, STATIC,   SINGULAR, UINT32,   wind_direction,    7) \
+X(a, STATIC,   SINGULAR, FLOAT,    wind_gust,         8) \
+X(a, STATIC,   SINGULAR, UENUM,    wind_speed_units,   9) \
+X(a, STATIC,   SINGULAR, FLOAT,    rainfall,         10) \
+X(a, STATIC,   SINGULAR, UENUM,    rainfall_units,   11) \
+X(a, STATIC,   SINGULAR, UINT32,   battery_level_mv,  12) \
+X(a, STATIC,   SINGULAR, UINT32,   battery_level_percent,  13)
 #define WeatherReadingMessage_CALLBACK NULL
 #define WeatherReadingMessage_DEFAULT NULL
 
@@ -54,7 +123,7 @@ extern const pb_msgdesc_t WeatherReadingMessage_msg;
 
 /* Maximum encoded size of messages (where known) */
 #define PROTO_WEATHER_READING_PB_H_MAX_SIZE      WeatherReadingMessage_size
-#define WeatherReadingMessage_size               31
+#define WeatherReadingMessage_size               56
 
 #ifdef __cplusplus
 } /* extern "C" */

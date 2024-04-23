@@ -15,7 +15,7 @@ typedef enum {
     PUBLISH_FAILED
 } publish_status_t;
 
-publish_status_t publish_message_blocking(WeatherReadingMessage *weather_reading_message);
+publish_status_t publish_message_blocking(WeatherReadingMessage *weather_reading_message, uint8_t rssi);
 
 #endif // PUBLISHER_H
 

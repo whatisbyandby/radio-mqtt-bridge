@@ -1,11 +1,41 @@
 
 syntax = "proto3";
 
+enum TemperatureUnitsProto {
+  CELSIUS = 0;
+  FAHRENHEIT = 1;
+  KELVIN = 2;
+}
+enum PressureUnitsProto {
+  HECTOPASCALS = 0;
+  INCHES_OF_MERCURY = 1;
+  MILLIBARS = 2;
+  PASCALS = 3;
+}
+
+enum RainfallUnitsProto {
+  MILLIMETERS = 0;
+  INCHES = 1;
+}
+
+enum WindspeedUnitsProto {
+  MPS = 0;
+  KPH = 1;
+  MPH = 2;
+}
+
 message WeatherReadingMessage {
   float temperature = 1;
-  float humidity = 2;
-  float barometric_pressure = 3;
-  float wind_speed = 4;
-  float rainfall = 5;
-  uint32 wind_direction = 6;
+  TemperatureUnitsProto temperature_units = 2;
+  float humidity = 3;
+  float barometric_pressure = 4;
+  PressureUnitsProto pressure_units = 5;
+  float wind_speed = 6;
+  uint32 wind_direction = 7;
+  float wind_gust = 8;
+  WindspeedUnitsProto wind_speed_units = 9;
+  float rainfall = 10;
+  RainfallUnitsProto rainfall_units = 11;
+  uint32 battery_level_mv = 12;
+  uint32 battery_level_percent = 13;
 }

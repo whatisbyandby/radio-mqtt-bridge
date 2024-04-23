@@ -10,3 +10,7 @@ PB_BIND(WeatherReadingMessage, WeatherReadingMessage, AUTO)
 
 
 
+
+
+
+
